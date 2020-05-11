@@ -60,7 +60,7 @@ module Joiner
       if room_running?(@room.bbb_id)
         @meetingInfo=get_meeting_info(@room.bbb_id,@room.moderator_pw) 	 
         logger.info @meetingInfo.values_at(:attendees)
-        if @meetingInfo.values_at(:attendees).length() >=1
+        if @meetingInfo.values_at(:attendees).flatten.length() >= 5 
              search_params = params[@room.invite_path] || params
              @search, @order_column, @order_direction, pub_recs =
              public_recordings(@room.bbb_id, search_params.permit(:search, :column, :direction), true)
