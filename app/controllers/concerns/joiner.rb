@@ -59,7 +59,17 @@ module Joiner
       opts[:mute_on_start] = room_setting_with_config("muteOnStart")
       if room_running?(@room.bbb_id)
         @meetingInfo=get_meeting_info(@room.bbb_id,@room.moderator_pw) 	 
-        logger.info "meetingInfo: @meetingInfo."+@meetingInfo
+        logger.info @meetingInfo.values_at(:attendees)
+        if @meetingInfo.values_at(:attendees).length() >=1
+             search_params = params[@room.invite_path] || params
+             @search, @order_column, @order_direction, pub_recs =
+             public_recordings(@room.bbb_id, search_params.permit(:search, :column, :direction), true)
+
+             @pagy, @public_recordings = pagy_array(pub_recs)
+ 
+             render :much
+             return 
+        end 
       end
 
       if current_user
