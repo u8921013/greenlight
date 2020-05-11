@@ -33,6 +33,12 @@ module BbbServer
   def all_running_meetings
     bbb_server.get_meetings
   end
+  
+  def get_meeting_info(meeting_id,password)
+    logger.info "meetingInfo: meeting_id=>"+meeting_id 
+    logger.info "meetingInfo: password=>"+password 
+    bbb_server.get_meeting_info(meeting_id,password)
+  end
 
   def get_recordings(meeting_id)
     bbb_server.get_recordings(meetingID: meeting_id)

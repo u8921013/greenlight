@@ -57,6 +57,10 @@ module Joiner
 
       opts[:require_moderator_approval] = room_setting_with_config("requireModeratorApproval")
       opts[:mute_on_start] = room_setting_with_config("muteOnStart")
+      if room_running?(@room.bbb_id)
+        @meetingInfo=get_meeting_info(@room.bbb_id,@room.moderator_pw) 	 
+        logger.info "meetingInfo: @meetingInfo."+@meetingInfo
+      end
 
       if current_user
         redirect_to join_path(@room, current_user.name, opts, current_user.uid)
